@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stones & Sails - Stones & Sails Adventure</title>
+    <link rel='icon' href='/src/icons/logo.png' type='image/x-icon'>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #fff;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #df7599;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(223, 117, 153, 0.4);
+            border: 2px solid transparent;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(223, 117, 153, 0.6);
+            background-color: #fff;
+            color: #df7599;
+            border: 2px solid #df7599;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 300;
+            color: #df7599;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #b2e8f7, #df7599);
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 60px;
+            margin-right: 15px;
+            border-radius: 12px;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            color: #df7599;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .logo-text span {
+            color: #b2e8f7;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            position: relative;
+            font-size: 18px;
+            font-weight: 500;
+            color: #333;
+            padding: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #b2e8f7, #df7599);
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        .nav-link:hover {
+            color: #df7599;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 24px;
+            background: none;
+            border: none;
+            color: #df7599;
+            cursor: pointer;
+        }
+
+
+
+        /* Footer */
+        .footer {
+            background-color: white;
+            padding: 60px 0 20px;
+            position: relative;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        .footer-info {
+            margin-bottom: 30px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo img {
+            height: 50px;
+            margin-right: 15px;
+            border-radius: 10px;
+        }
+
+        .footer-logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #df7599;
+        }
+
+        .footer-logo-text span {
+            color: #b2e8f7;
+        }
+
+        .footer-desc {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #ffdae6;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #df7599;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: #df7599;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-link {
+            font-size: 1.1rem;
+            color: #666;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-link:hover {
+            color: #df7599;
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+            color: #999;
+            font-size: 1rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+
+            .features-grid,
+            .characters-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .gameplay-features {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .gameplay-text {
+                padding-right: 0;
+            }
+
+            .gameplay-img {
+                transform: rotate(0);
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .features-grid,
+            .characters-grid,
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title {
+                font-size: 3.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-btns {
+                flex-direction: column;
+            }
+        }
+
+        /* Animations and Magic Effects */
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 10px rgba(178, 232, 247, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(223, 117, 153, 0.7), 0 0 40px rgba(178, 232, 247, 0.5);
+            }
+
+            100% {
+                box-shadow: 0 0 10px rgba(178, 232, 247, 0.5);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -500px 0;
+            }
+
+            100% {
+                background-position: 500px 0;
+            }
+        }
+
+        .magical {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .glowing {
+            animation: glow 3s infinite;
+        }
+
+        .shimmering {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            background-size: 500px 100%;
+            animation: shimmer 2s infinite linear;
+        }
+
+        .cookie-policy {
+            padding: 140px 0 80px;
+            background-color: white;
+            min-height: 100vh;
+        }
+
+        .cookie-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .cookie-header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .cookie-title {
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: #df7599;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .cookie-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #b2e8f7, #df7599);
+            border-radius: 2px;
+        }
+
+        .cookie-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 300;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .cookie-section {
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid #ffdae6;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cookie-section::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(178, 232, 247, 0.2), transparent);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .cookie-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border-color: #df7599;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 300;
+            color: #df7599;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #666;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        .section-content strong {
+            color: #df7599;
+            font-weight: 500;
+        }
+
+        .section-content a {
+            color: #b2e8f7;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid transparent;
+        }
+
+        .section-content a:hover {
+            color: #df7599;
+            border-bottom: 1px solid #df7599;
+        }
+
+        .section-content ul {
+            padding-left: 20px;
+            margin: 20px 0;
+        }
+
+        .section-content li {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .section-content li::before {
+            content: '•';
+            color: #b2e8f7;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        .cookie-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .cookie-table th,
+        .cookie-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ffdae6;
+        }
+
+        .cookie-table th {
+            background-color: #ffdae6;
+            color: #df7599;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .cookie-table tr:nth-child(even) {
+            background-color: rgba(255, 218, 230, 0.1);
+        }
+
+        .cookie-table tr:hover {
+            background-color: rgba(178, 232, 247, 0.1);
+        }
+
+        .cookie-footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+
+        .cookie-footer p {
+            font-size: 1rem;
+            color: #999;
+        }
+
+        .magical-dot {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 218, 230, 0.8), transparent);
+            filter: blur(20px);
+            z-index: 0;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .dot-1 {
+            top: 10%;
+            right: 10%;
+            animation-delay: 0s;
+        }
+
+        .dot-2 {
+            bottom: 30%;
+            left: 5%;
+            animation-delay: 5s;
+            background: radial-gradient(circle, rgba(178, 232, 247, 0.8), transparent);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(20px, -20px);
+            }
+
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cookie-title {
+                font-size: 2.5rem;
+            }
+
+            .cookie-section {
+                padding: 30px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .cookie-table th,
+            .cookie-table td {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="/" class="logo">
+                <img src="/src/icons/logo.png" alt="Stones & Sails Logo">
+                <div class="logo-text">Stones & Sails</div>
+            </a>
+            <nav class="nav-links ">
+                <a href="/#features" class="nav-link">Features</a>
+                <a href="/#characters" class="nav-link">Characters</a>
+                <a href="/#gameplay" class="nav-link">Gameplay</a>
+                <a href="/#gallery" class="nav-link">Gallery</a>
+                <a href="/#stats" class="nav-link">Stats</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <!-- Cookie Policy Section -->
+    <section class="cookie-policy">
+        <div class="cookie-container">
+            <div class="cookie-header">
+                <h1 class="cookie-title magical">Cookie Policy</h1>
+                <p class="cookie-subtitle">This Cookie Policy explains how Stones & Sails uses cookies and similar technologies to recognize you when you visit our website.</p>
+            </div>
+
+            <div class="magical-dot dot-1"></div>
+            <div class="magical-dot dot-2"></div>
+
+            <div class="cookie-section">
+                <h2 class="section-title">What Are Cookies</h2>
+                <div class="section-content">
+                    <p>Cookies are small data files that are placed on your computer or mobile device when you visit a website. Cookies are widely used by website owners to make their websites work efficiently and provide reporting information.</p>
+
+                    <p>Cookies set by the website owner (in this case, Stones & Sails) are called "first-party cookies". Cookies set by parties other than the website owner are called "third-party cookies". Third-party cookies enable third-party features or functionality to be provided on or through the website (such as advertising, interactive content, and analytics).</p>
+
+                    <p>The parties that set these third-party cookies can recognize your computer both when it visits the website in question and also when it visits certain other websites.</p>
+                </div>
+            </div>
+            <div class="cookie-section">
+                <h2 class="section-title">Why We Use Cookies</h2>
+                <div class="section-content">
+                    <p>We use cookies for several reasons. Some cookies are required for technical reasons in order for our website to operate, and we refer to these as "essential" or "strictly necessary" cookies. Other cookies also enable us to track and target the interests of our users to enhance the experience on our website. Third parties serve cookies through our website for advertising, analytics, and other purposes.</p>
+
+                    <p>The specific types of first and third-party cookies served through our website and the purposes they perform are described below:</p>
+                </div>
+            </div>
+
+            <div class="cookie-section">
+                <h2 class="section-title">Types of Cookies We Use</h2>
+                <div class="section-content">
+                    <p>The cookies we use on our website can be categorized as follows:</p>
+
+                    <h3 style="font-size: 1.4rem; color: #df7599; margin: 20px 0 10px; font-weight: 300;">Strictly Necessary Cookies</h3>
+                    <p>These cookies are essential for you to browse the website and use its features, such as accessing secure areas of the site. These cookies cannot be turned off.</p>
+
+                    <h3 style="font-size: 1.4rem; color: #df7599; margin: 20px 0 10px; font-weight: 300;">Performance Cookies</h3>
+                    <p>These cookies collect information about how you use our website, like which pages you visited and which links you clicked on. None of this information can be used to identify you. It is all aggregated and, therefore, anonymized. Their sole purpose is to improve website functions.</p>
+
+                    <h3 style="font-size: 1.4rem; color: #df7599; margin: 20px 0 10px; font-weight: 300;">Functional Cookies</h3>
+                    <p>These cookies enable the website to provide enhanced functionality and personalization. They may be set by us or by third-party providers whose services we have added to our pages. If you do not allow these cookies, then some or all of these services may not function properly.</p>
+
+                    <h3 style="font-size: 1.4rem; color: #df7599; margin: 20px 0 10px; font-weight: 300;">Targeting Cookies</h3>
+                    <p>These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant advertisements on other sites. They do not store directly personal information but are based on uniquely identifying your browser and internet device.</p>
+
+                    <table class="cookie-table">
+                        <thead>
+                            <tr>
+                                <th>Cookie Type</th>
+                                <th>Purpose</th>
+                                <th>Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Session Cookies</td>
+                                <td>Used to maintain your session state and remember your preferences during browsing</td>
+                                <td>Session (removed when browser is closed)</td>
+                            </tr>
+                            <tr>
+                                <td>Preference Cookies</td>
+                                <td>Remember settings you've applied (e.g., theme, layout, font size)</td>
+                                <td>1 year</td>
+                            </tr>
+                            <tr>
+                                <td>Analytics Cookies</td>
+                                <td>Help us understand how visitors interact with our website</td>
+                                <td>Up to 2 years</td>
+                            </tr>
+                            <tr>
+                                <td>Marketing Cookies</td>
+                                <td>Used to track visitors across websites to display relevant advertisements</td>
+                                <td>Up to 2 years</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="cookie-section">
+                <h2 class="section-title">How to Control and Delete Cookies</h2>
+                <div class="section-content">
+                    <p>You have the right to choose whether or not to accept cookies. However, they are an important part of how our website works, so you should be aware that if you choose to refuse or remove cookies, this could affect the availability and functionality of the website.</p>
+
+                    <p>Most web browsers are set to accept cookies by default. If you prefer, you can usually choose to set your browser to remove or reject browser cookies. To do this, please follow the instructions provided by your browser (usually located within the "Help", "Tools" or "Edit" settings).</p>
+
+                    <p>You can also opt out of cookies set by specific third parties by using the following tools:</p>
+                    <ul>
+                        <li>For Google Analytics, you can opt out by downloading and installing the browser plugin available at: <a href="https://tools.google.com/dlpage/gaoptout">https://tools.google.com/dlpage/gaoptout</a></li>
+                        <li>For interest-based advertising, you can adjust your settings on Google, Facebook, and other third-party sites where you have accounts.</li>
+                        <li>You can also visit the Digital Advertising Alliance's opt-out portal at: <a href="https://optout.aboutads.info/">https://optout.aboutads.info/</a></li>
+                    </ul>
+
+                    <p>Please note that even if you opt out of tracking by Google Analytics, we may still collect some data about how you use our site, but it will be anonymous.</p>
+                </div>
+            </div>
+
+            <div class="cookie-section">
+                <h2 class="section-title">Cookie Consent</h2>
+                <div class="section-content">
+                    <p>When you first visit our website, we will ask for your consent to use cookies. You can choose to accept all cookies, only essential cookies, or to customize your preferences. You can change your cookie preferences at any time by clicking on the "Cookie Settings" link in the footer of our website.</p>
+
+                    <p>If you prefer to manually manage cookies, you can disable cookies from your browser settings. Please note that if you choose to decline cookies, you may not be able to fully experience the interactive features of our website.</p>
+                </div>
+            </div>
+
+            <div class="cookie-section">
+                <h2 class="section-title">Changes to Our Cookie Policy</h2>
+                <div class="section-content">
+                    <p>We may update our Cookie Policy from time to time to reflect changes in technology, regulation, or our business practices. Any changes will be posted on this page and, if the changes are significant, we will provide a more prominent notice.</p>
+
+                    <p>We encourage you to periodically review this Cookie Policy to stay informed about how we are using cookies. Your continued use of our website after any changes to this Cookie Policy constitutes your acceptance of the new policy.</p>
+                </div>
+            </div>
+
+            <div class="cookie-section">
+                <h2 class="section-title">Contact Us</h2>
+                <div class="section-content">
+                    <p>If you have any questions about our use of cookies or this Cookie Policy, please contact us:</p>
+                    <ul>
+                        <li>By email: support@stonessails-play.com</li>
+                        <li>Through our contact form on the website</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cookie-footer">
+                <p>Last updated: March 2025 | © Stones & Sails. All Rights Reserved.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-info">
+                    <a href="/" class="footer-logo">
+                        <img src="/src/icons/logo.png" alt="Stones & Sails Logo">
+                        <div class="footer-logo-text">Stones & Sails</div>
+                    </a>
+                    <p class="footer-desc">An epic pirate match-3 puzzle adventure where you'll join Captain Lizzie and her crew to sail the seven seas, collect treasures, and solve challenging puzzles!</p>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/redBitgames" target="_blank" class="social-icon">F</a>
+                        <a href="https://twitter.com/redBitgames" target="_blank" class="social-icon">T</a>
+                        <a href="https://www.instagram.com/redbit_games/" target="_blank" class="social-icon">I</a>
+                        <a href="https://www.youtube.com/user/redBitgamesOfficial" target="_blank" class="social-icon">Y</a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <a href="/Policy356/" class="footer-link">Privacy Policy</a>
+                    <a href="/Service347/" class="footer-link">Terms of Service</a>
+                    <a href="/Cookie992/" class="footer-link">Cookie Policy</a>
+
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Stones & Sails. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stones & Sails - Stones & Sails Adventure</title>
+    <link rel='icon' href='/src/icons/logo.png' type='image/x-icon'>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #fff;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #df7599;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(223, 117, 153, 0.4);
+            border: 2px solid transparent;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(223, 117, 153, 0.6);
+            background-color: #fff;
+            color: #df7599;
+            border: 2px solid #df7599;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 300;
+            color: #df7599;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #b2e8f7, #df7599);
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 60px;
+            margin-right: 15px;
+            border-radius: 12px;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            color: #df7599;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .logo-text span {
+            color: #b2e8f7;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            position: relative;
+            font-size: 18px;
+            font-weight: 500;
+            color: #333;
+            padding: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #b2e8f7, #df7599);
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        .nav-link:hover {
+            color: #df7599;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 24px;
+            background: none;
+            border: none;
+            color: #df7599;
+            cursor: pointer;
+        }
+
+
+
+        /* Footer */
+        .footer {
+            background-color: white;
+            padding: 60px 0 20px;
+            position: relative;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        .footer-info {
+            margin-bottom: 30px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo img {
+            height: 50px;
+            margin-right: 15px;
+            border-radius: 10px;
+        }
+
+        .footer-logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #df7599;
+        }
+
+        .footer-logo-text span {
+            color: #b2e8f7;
+        }
+
+        .footer-desc {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #ffdae6;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #df7599;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: #df7599;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-link {
+            font-size: 1.1rem;
+            color: #666;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-link:hover {
+            color: #df7599;
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+            color: #999;
+            font-size: 1rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+
+            .features-grid,
+            .characters-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .gameplay-features {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .gameplay-text {
+                padding-right: 0;
+            }
+
+            .gameplay-img {
+                transform: rotate(0);
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .features-grid,
+            .characters-grid,
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title {
+                font-size: 3.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-btns {
+                flex-direction: column;
+            }
+        }
+
+        /* Animations and Magic Effects */
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 10px rgba(178, 232, 247, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(223, 117, 153, 0.7), 0 0 40px rgba(178, 232, 247, 0.5);
+            }
+
+            100% {
+                box-shadow: 0 0 10px rgba(178, 232, 247, 0.5);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -500px 0;
+            }
+
+            100% {
+                background-position: 500px 0;
+            }
+        }
+
+        .magical {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .glowing {
+            animation: glow 3s infinite;
+        }
+
+        .shimmering {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            background-size: 500px 100%;
+            animation: shimmer 2s infinite linear;
+        }
+
+        .terms-conditions {
+            padding: 140px 0 80px;
+            background-color: white;
+            min-height: 100vh;
+        }
+
+        .terms-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .terms-header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .terms-title {
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: #df7599;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .terms-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #b2e8f7, #df7599);
+            border-radius: 2px;
+        }
+
+        .terms-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 300;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .terms-section {
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid #ffdae6;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .terms-section::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(178, 232, 247, 0.2), transparent);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .terms-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border-color: #df7599;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 300;
+            color: #df7599;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #666;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        .section-content strong {
+            color: #df7599;
+            font-weight: 500;
+        }
+
+        .section-content a {
+            color: #b2e8f7;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid transparent;
+        }
+
+        .section-content a:hover {
+            color: #df7599;
+            border-bottom: 1px solid #df7599;
+        }
+
+        .section-content ul {
+            padding-left: 20px;
+            margin: 20px 0;
+        }
+
+        .section-content li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .section-content li::before {
+            content: '•';
+            color: #b2e8f7;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        .terms-footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+
+        .terms-footer p {
+            font-size: 1rem;
+            color: #999;
+        }
+
+        .magical-dot {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 218, 230, 0.8), transparent);
+            filter: blur(20px);
+            z-index: 0;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .dot-1 {
+            top: 10%;
+            right: 10%;
+            animation-delay: 0s;
+        }
+
+        .dot-2 {
+            bottom: 30%;
+            left: 5%;
+            animation-delay: 5s;
+            background: radial-gradient(circle, rgba(178, 232, 247, 0.8), transparent);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(20px, -20px);
+            }
+
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .terms-title {
+                font-size: 2.5rem;
+            }
+
+            .terms-section {
+                padding: 30px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="/" class="logo">
+                <img src="/src/icons/logo.png" alt="Stones & Sails Logo">
+                <div class="logo-text">Stones & Sails</div>
+            </a>
+            <nav class="nav-links ">
+                <a href="/#features" class="nav-link">Features</a>
+                <a href="/#characters" class="nav-link">Characters</a>
+                <a href="/#gameplay" class="nav-link">Gameplay</a>
+                <a href="/#gallery" class="nav-link">Gallery</a>
+                <a href="/#stats" class="nav-link">Stats</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <!-- Terms and Conditions Section -->
+    <section class="terms-conditions">
+        <div class="terms-container">
+            <div class="terms-header">
+                <h1 class="terms-title magical">Terms and Conditions</h1>
+                <p class="terms-subtitle">Please read these terms and conditions carefully before using our website.</p>
+            </div>
+
+            <div class="magical-dot dot-1"></div>
+            <div class="magical-dot dot-2"></div>
+
+            <div class="terms-section">
+                <div class="section-content">
+                    <p>Welcome to Stones & Sails!</p>
+                    <p>These terms and conditions outline the rules and regulations for the use of Stones & Sails's website, located at https://stonessails-play.com/.</p>
+                    <p>By accessing this website, we assume you accept these terms and conditions. Do not continue to use Stones & Sails if you do not agree to take all of the terms and conditions stated on this page.</p>
+                    <p>The following terminology applies to these Terms and Conditions, Privacy Statement, and Disclaimer Notice and all Agreements: "Client", "You," and "Your" refer to you, the person logging on this website and compliant with the Company's terms and conditions. "The Company," "Ourselves," "We," "Our," and "Us," refer to our Company. "Party," "Parties," or "Us," refer to both the Client and ourselves. All terms refer to the offer, acceptance, and consideration of payment necessary to undertake the process of our assistance to the Client in the most appropriate manner for the express purpose of meeting the Client's needs in respect of the provision of the Company's stated services, in accordance with and subject to, prevailing law of the Netherlands. Any use of the above terminology or other words in the singular, plural, capitalization, and/or he/she or they, are taken as interchangeable and therefore as referring to the same.</p>
+                </div>
+            </div>
+            <div class="terms-section">
+                <h2 class="section-title">Cookies</h2>
+                <div class="section-content">
+                    <p>We employ the use of cookies. By accessing Stones & Sails, you agreed to use cookies in agreement with Stones & Sails's Privacy Policy.</p>
+                    <p>Most interactive websites use cookies to let us retrieve the user's details for each visit. Cookies are used by our website to enable the functionality of certain areas to make it easier for people visiting our website. Some of our affiliate/advertising partners may also use cookies.</p>
+                </div>
+            </div>
+
+            <div class="terms-section">
+                <h2 class="section-title">License</h2>
+                <div class="section-content">
+                    <p>Unless otherwise stated, Stones & Sails and/or its licensors own the intellectual property rights for all material on Stones & Sails. All intellectual property rights are reserved. You may access this from Stones & Sails for your own personal use subjected to restrictions set in these terms and conditions.</p>
+                    <p>You must not:</p>
+                    <ul>
+                        <li>Republish material from Stones & Sails</li>
+                        <li>Sell, rent, or sub-license material from Stones & Sails</li>
+                        <li>Reproduce, duplicate, or copy material from Stones & Sails</li>
+                        <li>Redistribute content from Stones & Sails</li>
+                    </ul>
+                    <p>This Agreement shall begin on the date hereof.</p>
+                    <p>Parts of this website offer an opportunity for users to post and exchange opinions and information in certain areas of the website. Stones & Sails does not filter, edit, publish, or review Comments prior to their presence on the website. Comments do not reflect the views and opinions of Stones & Sails, its agents, and/or affiliates. Comments reflect the views and opinions of the person who posts them. To the extent permitted by applicable laws, Stones & Sails shall not be liable for the Comments or for any liability, damages, or expenses caused and/or suffered as a result of any use of and/or posting of and/or appearance of the Comments on this website.</p>
+                    <p>Stones & Sails reserves the right to monitor all Comments and to remove any Comments that can be considered inappropriate, offensive, or cause a breach of these Terms and Conditions.</p>
+                </div>
+            </div>
+            <div class="terms-section">
+                <div class="section-content">
+                    <p>You warrant and represent that:</p>
+                    <ul>
+                        <li>You are entitled to post the Comments on our website and have all necessary licenses and consents to do so;</li>
+                        <li>The Comments do not invade any intellectual property right, including without limitation copyright, patent, or trademark of any third party;</li>
+                        <li>The Comments do not contain any defamatory, libelous, offensive, indecent, or otherwise unlawful material which is an invasion of privacy;</li>
+                        <li>The Comments will not be used to solicit or promote business or custom or present commercial activities or unlawful activity.</li>
+                    </ul>
+                    <p>You hereby grant Stones & Sails a non-exclusive license to use, reproduce, edit, and authorize others to use, reproduce, and edit any of your Comments in any and all forms, formats, or media.</p>
+                </div>
+            </div>
+
+            <div class="terms-section">
+                <h2 class="section-title">Hyperlinking to our Content</h2>
+                <div class="section-content">
+                    <p>The following organizations may link to our Website without prior written approval:</p>
+                    <ul>
+                        <li>Government agencies;</li>
+                        <li>Search engines;</li>
+                        <li>News organizations;</li>
+                        <li>Online directory distributors may link to our Website in the same manner as they hyperlink to the Websites of other listed businesses; and</li>
+                        <li>System-wide Accredited Businesses except soliciting non-profit organizations, charity shopping malls, and charity fundraising groups which may not hyperlink to our Website.</li>
+                    </ul>
+                    <p>These organizations may link to our home page, to publications, or to other Website information so long as the link: (a) is not in any way deceptive; (b) does not falsely imply sponsorship, endorsement, or approval of the linking party and its products and/or services; and (c) fits within the context of the linking party's site.</p>
+                </div>
+            </div>
+
+            <div class="terms-section">
+                <h2 class="section-title">Content Liability</h2>
+                <div class="section-content">
+                    <p>We shall not be held responsible for any content that appears on your Website. You agree to protect and defend us against all claims that arise on your Website. No link(s) should appear on any Website that may be interpreted as libelous, obscene, or criminal, or which infringes, otherwise violates, or advocates the infringement or other violation of, any third party rights.</p>
+                </div>
+            </div>
+            <div class="terms-section">
+                <h2 class="section-title">Reservation of Rights</h2>
+                <div class="section-content">
+                    <p>We reserve the right to request that you remove all links or any particular link to our Website. You approve to immediately remove all links to our Website upon request. We also reserve the right to amend these terms and conditions and its linking policy at any time. By continuously linking to our Website, you agree to be bound to and follow these linking terms and conditions.</p>
+                </div>
+            </div>
+
+            <div class="terms-section">
+                <h2 class="section-title">Removal of links from our website</h2>
+                <div class="section-content">
+                    <p>If you find any link on our Website that is offensive for any reason, you are free to contact and inform us at any moment. We will consider requests to remove links but we are not obligated to or so or to respond to you directly.</p>
+                </div>
+            </div>
+
+            <div class="terms-section">
+                <h2 class="section-title">Disclaimer</h2>
+                <div class="section-content">
+                    <p>To the maximum extent permitted by applicable law, we exclude all representations, warranties, and conditions relating to our website and the use of this website. Nothing in this disclaimer will:</p>
+                    <ul>
+                        <li>Limit or exclude our or your liability for death or personal injury;</li>
+                        <li>Limit or exclude our or your liability for fraud or fraudulent misrepresentation;</li>
+                        <li>Limit any of our or your liabilities in any way that is not permitted under applicable law; or</li>
+                        <li>Exclude any of our or your liabilities that may not be excluded under applicable law.</li>
+                    </ul>
+                    <p>As long as the website and the information and services on the website are provided free of charge, we will not be liable for any loss or damage of any nature.</p>
+                </div>
+            </div>
+
+            <div class="terms-footer">
+                <p>Last updated: March 2025 | © Stones & Sails. All Rights Reserved.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-info">
+                    <a href="/" class="footer-logo">
+                        <img src="/src/icons/logo.png" alt="Stones & Sails Logo">
+                        <div class="footer-logo-text">Stones & Sails</div>
+                    </a>
+                    <p class="footer-desc">An epic pirate match-3 puzzle adventure where you'll join Captain Lizzie and her crew to sail the seven seas, collect treasures, and solve challenging puzzles!</p>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/redBitgames" target="_blank" class="social-icon">F</a>
+                        <a href="https://twitter.com/redBitgames" target="_blank" class="social-icon">T</a>
+                        <a href="https://www.instagram.com/redbit_games/" target="_blank" class="social-icon">I</a>
+                        <a href="https://www.youtube.com/user/redBitgamesOfficial" target="_blank" class="social-icon">Y</a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <a href="/Policy356/" class="footer-link">Privacy Policy</a>
+                    <a href="/Service347/" class="footer-link">Terms of Service</a>
+                    <a href="/Cookie992/" class="footer-link">Cookie Policy</a>
+
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Stones & Sails. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <?php include '../cookie-consent.php'; ?>
+</body>
+
+</html>

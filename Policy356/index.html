@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stones & Sails - Stones & Sails Adventure</title>
+    <link rel='icon' href='/src/icons/logo.png' type='image/x-icon'>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #fff;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #df7599;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(223, 117, 153, 0.4);
+            border: 2px solid transparent;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(223, 117, 153, 0.6);
+            background-color: #fff;
+            color: #df7599;
+            border: 2px solid #df7599;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 300;
+            color: #df7599;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #b2e8f7, #df7599);
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 60px;
+            margin-right: 15px;
+            border-radius: 12px;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            color: #df7599;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .logo-text span {
+            color: #b2e8f7;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            position: relative;
+            font-size: 18px;
+            font-weight: 500;
+            color: #333;
+            padding: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #b2e8f7, #df7599);
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        .nav-link:hover {
+            color: #df7599;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 24px;
+            background: none;
+            border: none;
+            color: #df7599;
+            cursor: pointer;
+        }
+
+
+
+        /* Footer */
+        .footer {
+            background-color: white;
+            padding: 60px 0 20px;
+            position: relative;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        .footer-info {
+            margin-bottom: 30px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo img {
+            height: 50px;
+            margin-right: 15px;
+            border-radius: 10px;
+        }
+
+        .footer-logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #df7599;
+        }
+
+        .footer-logo-text span {
+            color: #b2e8f7;
+        }
+
+        .footer-desc {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #ffdae6;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #df7599;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: #df7599;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-link {
+            font-size: 1.1rem;
+            color: #666;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-link:hover {
+            color: #df7599;
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+            color: #999;
+            font-size: 1rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+
+            .features-grid,
+            .characters-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .gameplay-features {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .gameplay-text {
+                padding-right: 0;
+            }
+
+            .gameplay-img {
+                transform: rotate(0);
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .features-grid,
+            .characters-grid,
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title {
+                font-size: 3.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-btns {
+                flex-direction: column;
+            }
+        }
+
+        /* Animations and Magic Effects */
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 10px rgba(178, 232, 247, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(223, 117, 153, 0.7), 0 0 40px rgba(178, 232, 247, 0.5);
+            }
+
+            100% {
+                box-shadow: 0 0 10px rgba(178, 232, 247, 0.5);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -500px 0;
+            }
+
+            100% {
+                background-position: 500px 0;
+            }
+        }
+
+        .magical {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .glowing {
+            animation: glow 3s infinite;
+        }
+
+        .shimmering {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            background-size: 500px 100%;
+            animation: shimmer 2s infinite linear;
+        }
+
+        .privacy-policy {
+            padding: 140px 0 80px;
+            background-color: white;
+            min-height: 100vh;
+        }
+
+        .privacy-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .privacy-header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .privacy-title {
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: #df7599;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .privacy-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #b2e8f7, #df7599);
+            border-radius: 2px;
+        }
+
+        .privacy-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 300;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .privacy-section {
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid #ffdae6;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .privacy-section::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(178, 232, 247, 0.2), transparent);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .privacy-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border-color: #df7599;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 300;
+            color: #df7599;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #666;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        .section-content a {
+            color: #b2e8f7;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid transparent;
+        }
+
+        .section-content a:hover {
+            color: #df7599;
+            border-bottom: 1px solid #df7599;
+        }
+
+        .section-content ul {
+            padding-left: 20px;
+            margin: 20px 0;
+        }
+
+        .section-content li {
+            margin-bottom: 10px;
+        }
+
+        .privacy-footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+
+        .privacy-footer p {
+            font-size: 1rem;
+            color: #999;
+        }
+
+        .magical-dot {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 218, 230, 0.8), transparent);
+            filter: blur(20px);
+            z-index: 0;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .dot-1 {
+            top: 10%;
+            right: 10%;
+            animation-delay: 0s;
+        }
+
+        .dot-2 {
+            bottom: 30%;
+            left: 5%;
+            animation-delay: 5s;
+            background: radial-gradient(circle, rgba(178, 232, 247, 0.8), transparent);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(20px, -20px);
+            }
+
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .privacy-title {
+                font-size: 2.5rem;
+            }
+
+            .privacy-section {
+                padding: 30px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="/" class="logo">
+                <img src="/src/icons/logo.png" alt="Stones & Sails Logo">
+                <div class="logo-text">Stones & Sails</div>
+            </a>
+            <nav class="nav-links ">
+                <a href="/#features" class="nav-link">Features</a>
+                <a href="/#characters" class="nav-link">Characters</a>
+                <a href="/#gameplay" class="nav-link">Gameplay</a>
+                <a href="/#gallery" class="nav-link">Gallery</a>
+                <a href="/#stats" class="nav-link">Stats</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <!-- Privacy Policy Section -->
+    <section class="privacy-policy">
+        <div class="privacy-container">
+            <div class="privacy-header">
+                <h1 class="privacy-title magical">Privacy Policy</h1>
+                <p class="privacy-subtitle">This Privacy Policy outlines the types of information collected by Stones & Sails and how we use it.</p>
+            </div>
+
+            <div class="magical-dot dot-1"></div>
+            <div class="magical-dot dot-2"></div>
+
+            <div class="privacy-section">
+                <h2 class="section-title">Introduction</h2>
+                <div class="section-content">
+                    <p>At Stones & Sails, accessible from https://stonessails-play.com/, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that are collected and recorded by Stones & Sails and how we use it.</p>
+                    <p>If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us.</p>
+                </div>
+            </div>
+
+            <div class="privacy-section">
+                <h2 class="section-title">Log Files</h2>
+                <div class="section-content">
+                    <p>Stones & Sails follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and are a part of hosting services' analytics. The information collected by log files includes internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any personally identifiable information. The purpose of the information is to analyze trends, administer the site, track users' movement on the website, and gather demographic information.</p>
+                </div>
+            </div>
+            <div class="privacy-section">
+                <h2 class="section-title">Cookies and Web Beacons</h2>
+                <div class="section-content">
+                    <p>Like any other website, Stones & Sails uses "cookies". These cookies are used to store information including visitors' preferences and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information.</p>
+                    <p>For more general information on cookies, please read <a href="https://www.privacypolicyonline.com/what-are-cookies/">the "Cookies" article from the Privacy Policy Generator</a>.</p>
+                </div>
+            </div>
+
+            <div class="privacy-section">
+                <h2 class="section-title">Google DoubleClick DART Cookie</h2>
+                <div class="section-content">
+                    <p>Google is one of the third-party vendors on our site. It also uses cookies, known as DART cookies, to serve ads to our site visitors based upon their visit to https://stonessails-play.com/ and other sites on the internet. However, visitors may choose to decline the use of DART cookies by visiting the Google ad and content network Privacy Policy at the following URL – <a href="https://policies.google.com/technologies/ads">https://policies.google.com/technologies/ads</a></p>
+                </div>
+            </div>
+
+            <div class="privacy-section">
+                <h2 class="section-title">Our Advertising Partners</h2>
+                <div class="section-content">
+                    <p>Some of the advertisers on our site may use cookies and web beacons. Our advertising partners are listed below. Each of our advertising partners has its own Privacy Policy for their policies on user data. For easier access, we hyperlinked to their Privacy Policies below.</p>
+                    <ul>
+                        <li>
+                            <p>Google</p>
+                            <p><a href="https://policies.google.com/technologies/ads">https://policies.google.com/technologies/ads</a></p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="privacy-section">
+                <h2 class="section-title">Privacy Policies</h2>
+                <div class="section-content">
+                    <p>You may consult this list to find the Privacy Policy for each of the advertising partners of Stones & Sails.</p>
+                    <p>Third-party ad servers or ad networks use technologies like cookies, JavaScript, or Web Beacons that are used in their respective advertisements and links that appear on Stones & Sails, which are sent directly to users' browsers. They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on websites that you visit.</p>
+                    <p>Note that Stones & Sails has no access to or control over these cookies that are used by third-party advertisers.</p>
+                </div>
+            </div>
+
+            <div class="privacy-section">
+                <h2 class="section-title">Third Party Privacy Policies</h2>
+                <div class="section-content">
+                    <p>Stones & Sails's Privacy Policy does not apply to other advertisers or websites. Thus, we are advising you to consult the respective Privacy Policies of these third-party ad servers for more detailed information. It may include their practices and instructions about how to opt out of certain options.</p>
+                    <p>You can choose to disable cookies through your browser options. More detailed information about cookie management with specific web browsers can be found at the browsers' respective websites.</p>
+                </div>
+            </div>
+
+            <div class="privacy-footer">
+                <p>Last updated: March 2025 | © Stones & Sails. All Rights Reserved.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-info">
+                    <a href="/" class="footer-logo">
+                        <img src="/src/icons/logo.png" alt="Stones & Sails Logo">
+                        <div class="footer-logo-text">Stones & Sails</div>
+                    </a>
+                    <p class="footer-desc">An epic pirate match-3 puzzle adventure where you'll join Captain Lizzie and her crew to sail the seven seas, collect treasures, and solve challenging puzzles!</p>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/redBitgames" target="_blank" class="social-icon">F</a>
+                        <a href="https://twitter.com/redBitgames" target="_blank" class="social-icon">T</a>
+                        <a href="https://www.instagram.com/redbit_games/" target="_blank" class="social-icon">I</a>
+                        <a href="https://www.youtube.com/user/redBitgamesOfficial" target="_blank" class="social-icon">Y</a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <a href="/Policy356/" class="footer-link">Privacy Policy</a>
+                    <a href="/Service347/" class="footer-link">Terms of Service</a>
+                    <a href="/Cookie992/" class="footer-link">Cookie Policy</a>
+
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Stones & Sails. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <?php include '../cookie-consent.php'; ?>
+</body>
+
+</html>
